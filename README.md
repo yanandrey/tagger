@@ -1,1 +1,1 @@
-# tagger
+WebAPI to tag videos from its link using **.NET** and **MongoDB**. A NoSQL database was used to make structuring more flexible and easier to store data with no defined structure.
