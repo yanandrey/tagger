@@ -3,25 +3,25 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using tagger.Models;
 
-namespace tagger.Service
+namespace tagger.Business.Implementation
 {
-    public class TaggerService
+    public class VideoImplementation : IVideoBusiness
     {
         private readonly IMongoCollection<Video> _videos;
         
-        public TaggerService(IDatabaseServices settings)
+        public VideoImplementation()
         {
             var client = new MongoClient("mongodb://localhost:27017");
             var database = client.GetDatabase("VideosDb");
             _videos = database.GetCollection<Video>("videos");
         }
 
-        public List<Video> Get()
+        public List<Video> GetVideo()
         {
             return _videos.Find(new BsonDocument()).ToList();
         }
 
-        public Video Create(Video video)
+        public Video TagVideo(Video video)
         {
             _videos.InsertOne(video);
             return video;

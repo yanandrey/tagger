@@ -1,6 +1,6 @@
 ﻿namespace tagger.Service
 {
-    public class DatabaseServices : IDatabaseServices
+    public class DatabaseService : IDatabaseServices
     {
         public string VideosCollectionName { get; set; }
         public string ConnectionString { get; set; }
