@@ -7,6 +7,8 @@ namespace tagger.Business
     {
         List<Video> GetVideo();
 
+        List<Video> GetVideoByTag(string tag);
+
         Video TagVideo(Video video);
     }
 }

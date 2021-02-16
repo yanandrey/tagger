@@ -20,6 +20,11 @@ namespace tagger.Business.Implementation
         {
             return _videos.Find(new BsonDocument()).ToList();
         }
+        
+        public List<Video> GetVideoByTag(string tag)
+        {
+            return _videos.FindSync(x => x.Tags.Contains(tag)).ToList();
+        }
 
         public Video TagVideo(Video video)
         {

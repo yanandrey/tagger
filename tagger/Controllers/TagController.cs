@@ -27,9 +27,25 @@ namespace tagger.Controllers
         [ProducesResponseType(typeof(Video), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        public ActionResult<List<Video>> Get()
+        public ActionResult<List<Video>> GetVideo()
         {
             return _business.GetVideo();
+        }
+
+        /// <summary>
+        /// It lists all videos with a specific tag.
+        /// </summary>
+        /// <param name="tag">Video tag to fetch.</param>
+        /// <returns>List all videos with a specific tag.</returns>
+        /// <response code="200"> When videos with specific tag are listed. </response>
+        /// <response code="500"> When there is an error when listing videos with specific tag. </response>
+        [HttpGet("findByTag")]
+        [ProducesResponseType(typeof(Video), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        public ActionResult<List<Video>> GetByTag([FromQuery] string tag)
+        {
+            return _business.GetVideoByTag(tag);
         }
 
         /// <summary>
