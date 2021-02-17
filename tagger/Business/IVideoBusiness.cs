@@ -10,5 +10,7 @@ namespace tagger.Business
         List<Video> GetVideoByTag(string tag);
 
         Video TagVideo(Video video);
+
+        Video UpdateVideo(Video video);
     }
 }

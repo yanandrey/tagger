@@ -53,7 +53,7 @@ namespace tagger.Controllers
         /// </summary>
         /// <param name="video">Video to be tagged.</param>
         /// <returns>Tagged video.</returns>
-        /// <response code="201"> When video are tagged. </response>
+        /// <response code="201"> When video is tagged. </response>
         /// <response code="400"> When a required field was not informed or entered incorrectly.</response>
         /// <response code="500"> When there is an error when tagging a video. </response>
         [HttpPost]
@@ -64,6 +64,24 @@ namespace tagger.Controllers
         public ActionResult Create([FromBody] Video video)
         {
             _business.TagVideo(video);
+            return Ok(video);
+        }
+
+        /// <summary>
+        /// It updates a tagged video.
+        /// </summary>
+        /// <param name="video">Tagged video to be updated.</param>
+        /// <returns>Updated tagged video.</returns>
+        /// <response code="200"> When a video tagged is updated. </response>
+        /// <response code="400"> When a required field was not informed or entered incorrectly.</response>
+        /// <response code="500"> When there is an error when tagging a video. </response>
+        [HttpPut]
+        [ProducesResponseType(typeof(Video), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public ActionResult Update([FromBody] Video video)
+        {
+            _business.UpdateVideo(video);
             return Ok(video);
         }
     }

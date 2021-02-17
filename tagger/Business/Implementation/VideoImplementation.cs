@@ -23,13 +23,30 @@ namespace tagger.Business.Implementation
         
         public List<Video> GetVideoByTag(string tag)
         {
-            return _videos.FindSync(x => x.Tags.Contains(tag)).ToList();
+            if (!string.IsNullOrWhiteSpace(tag))
+            {
+                return _videos.FindSync(x => x.Tags.Contains(tag)).ToList();
+            }
+
+            return null;
         }
 
         public Video TagVideo(Video video)
         {
             _videos.InsertOne(video);
             return video;
+        }
+
+        public Video UpdateVideo(Video video)
+        {
+            var result = _videos.Find(x => x.Link == video.Link);
+            if (result != null)
+            {
+                _videos.ReplaceOne(x => x.Link == video.Link, video);
+                return video;
+            }
+            
+            return null;
         }
     }
 }
