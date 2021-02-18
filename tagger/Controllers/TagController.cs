@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using tagger.Business;
@@ -27,9 +28,9 @@ namespace tagger.Controllers
         [ProducesResponseType(typeof(Video), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        public ActionResult<List<Video>> GetVideo()
+        public async Task<List<Video>> GetVideo()
         {
-            return _business.GetVideo();
+            return await _business.GetVideoAsync();
         }
 
         /// <summary>
@@ -61,9 +62,13 @@ namespace tagger.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         [Produces("application/json")]
-        public ActionResult Create([FromBody] Video video)
+        public async Task<ActionResult> Create([FromBody] Video video)
         {
-            _business.TagVideo(video);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            await _business.TagVideoAsync(video);
             return Ok(video);
         }
 
@@ -79,9 +84,13 @@ namespace tagger.Controllers
         [ProducesResponseType(typeof(Video), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public ActionResult Update([FromBody] Video video)
+        public async Task<ActionResult> Update([FromBody] Video video)
         {
-            _business.UpdateVideo(video);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            await _business.UpdateVideoAsync(video);
             return Ok(video);
         }
     }

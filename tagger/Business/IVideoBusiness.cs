@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using tagger.Models;
 
 namespace tagger.Business
 {
     public interface IVideoBusiness
     {
-        List<Video> GetVideo();
+        Task<List<Video>> GetVideoAsync();
 
         List<Video> GetVideoByTag(string tag);
 
-        Video TagVideo(Video video);
+        Task<Video> TagVideoAsync(Video video);
 
-        Video UpdateVideo(Video video);
+        Task<Video> UpdateVideoAsync(Video video);
     }
 }

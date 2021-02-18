@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using tagger.Models;
@@ -16,11 +17,11 @@ namespace tagger.Business.Implementation
             _videos = database.GetCollection<Video>("videos");
         }
 
-        public List<Video> GetVideo()
+        public async Task<List<Video>> GetVideoAsync()
         {
-            return _videos.Find(new BsonDocument()).ToList();
+            return await _videos.Find(new BsonDocument()).ToListAsync();
         }
-        
+
         public List<Video> GetVideoByTag(string tag)
         {
             if (!string.IsNullOrWhiteSpace(tag))
@@ -31,18 +32,18 @@ namespace tagger.Business.Implementation
             return null;
         }
 
-        public Video TagVideo(Video video)
+        public async Task<Video> TagVideoAsync(Video video)
         {
-            _videos.InsertOne(video);
+            await _videos.InsertOneAsync(video);
             return video;
         }
 
-        public Video UpdateVideo(Video video)
+        public async Task<Video> UpdateVideoAsync(Video video)
         {
             var result = _videos.Find(x => x.Link == video.Link);
             if (result != null)
             {
-                _videos.ReplaceOne(x => x.Link == video.Link, video);
+                await _videos.ReplaceOneAsync(x => x.Link == video.Link, video);
                 return video;
             }
             
