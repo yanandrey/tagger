@@ -13,5 +13,7 @@ namespace tagger.Business
         Task<Video> TagVideoAsync(Video video);
 
         Task<Video> UpdateVideoAsync(Video video);
+
+        Task<Video> DeleteVideoAsync(Video video);
     }
 }

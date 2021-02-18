@@ -49,5 +49,17 @@ namespace tagger.Business.Implementation
             
             return null;
         }
+
+        public async Task<Video> DeleteVideoAsync(Video video)
+        {
+            var result = _videos.Find(x => x.Link == video.Link);
+            if (result != null)
+            {
+                await _videos.DeleteOneAsync(x => x.Link == video.Link);
+                return video;
+            }
+            
+            return null;
+        }
     }
 }

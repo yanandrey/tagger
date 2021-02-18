@@ -79,11 +79,12 @@ namespace tagger.Controllers
         /// <returns>Updated tagged video.</returns>
         /// <response code="200"> When a video tagged is updated. </response>
         /// <response code="400"> When a required field was not informed or entered incorrectly.</response>
-        /// <response code="500"> When there is an error when tagging a video. </response>
+        /// <response code="500"> When there is an error when updating a tagged video. </response>
         [HttpPut]
         [ProducesResponseType(typeof(Video), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
         public async Task<ActionResult> Update([FromBody] Video video)
         {
             if (!ModelState.IsValid)
@@ -92,6 +93,25 @@ namespace tagger.Controllers
             }
             await _business.UpdateVideoAsync(video);
             return Ok(video);
+        }
+
+        /// <summary>
+        /// It deletes a tagged video.
+        /// </summary>
+        /// <param name="video">Tagged video to be deleted.</param>
+        /// <returns>Deleted tagged video.</returns>
+        /// <response code="204"> When a video tagged is deleted. </response>
+        /// <response code="400"> When a required field was not informed or entered incorrectly.</response>
+        /// <response code="500"> When there is an error when deleting a tagged video. </response>
+        [HttpDelete]
+        [ProducesResponseType(typeof(Video), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        public async Task<ActionResult> Delete(Video video)
+        {
+            await _business.DeleteVideoAsync(video);
+            return NoContent();
         }
     }
 }
