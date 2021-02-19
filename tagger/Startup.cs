@@ -51,6 +51,14 @@ namespace tagger
             
             //Dependency Injection
             services.AddScoped<IVideoBusiness, VideoImplementation>();
+            
+            //CORS
+            services.AddCors(options => options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
